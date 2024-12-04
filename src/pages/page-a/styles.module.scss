@@ -6,9 +6,37 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .title {
+    padding: 20px;
+    margin-bottom: 20px;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 20px;
+  }
+
+  .projectListContainer {
+    width: 100vw;
+    height: 80vh;
+    border: 1px solid red;
+    overflow-y: auto;
+    padding: 20px;
+
+    .projectList {
+      width: auto;
+      display: flex;
+      padding: 0 10px;
+
+      .projectListColumn {
+        padding: 0 10px; // Masonry 列间距
+      }
+
+      .projectItem {
+        margin-bottom: 20px;
+        border: 1px solid #000;
+        background: white;
+        border-radius: 4px;
+        padding: 10px;
+      }
+    }
   }
 }
