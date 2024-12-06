@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import Masonry from "react-masonry-css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Modal from "./components/modal";
 
 const initialProjects = [
   { logo: "1", title: "Project 1", height: 40 },
@@ -26,24 +27,29 @@ const initialProjects = [
 
 const PageA: React.FC = () => {
   const [projects, setProjects] = useState(initialProjects);
+  const [modalX, setModalX] = useState(window.innerWidth);
 
   const onLoadMore = () => {
     console.log("onLoadMore");
-    setProjects((prevProjects) => [...prevProjects, ...initialProjects]);
+    setTimeout(() => {
+      setProjects((prevProjects) => [...prevProjects, ...initialProjects]);
+    }, 1000);
   };
 
   return (
     <div className={styles.pageA}>
-      <div className={styles.title}>PageA</div>
-      <Link to="/page-b">PageB</Link>
+      <div className={styles.title}>
+        <span>PageA</span>
+        <Link to="/page-b">Navigate to PageB</Link>
+      </div>
 
       <div className={styles.projectListContainer} id="scrollableDiv">
         <InfiniteScroll
           dataLength={projects.length}
           next={onLoadMore}
           hasMore={true}
-          loader={<h4>Loading...</h4>}
-          endMessage={<h4>No more data</h4>}
+          loader={<h4 style={{ textAlign: "center" }}>Loading...</h4>}
+          endMessage={<h4 style={{ textAlign: "center" }}>No more data</h4>}
           scrollThreshold={0.9}
           scrollableTarget="scrollableDiv"
         >
@@ -57,6 +63,7 @@ const PageA: React.FC = () => {
                 className={styles.projectItem}
                 key={`${project.logo}-${index}`}
                 style={{ height: project.height }}
+                onClick={() => setModalX(0)}
               >
                 {project.title}
               </div>
@@ -64,6 +71,8 @@ const PageA: React.FC = () => {
           </Masonry>
         </InfiniteScroll>
       </div>
+
+      <Modal x={modalX} onClose={() => setModalX(window.innerWidth)} />
     </div>
   );
 };
