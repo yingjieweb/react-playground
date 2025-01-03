@@ -31,7 +31,8 @@ function PageB() {
         onClick={() =>
           showModal({
             title: "确认",
-            message: "确认内容",
+            message: "这是一段普通的文本哦",
+            // message: "<p>这是一段<strong>HTML</strong>内容</p>",
             buttons: [
               {
                 type: "primary",

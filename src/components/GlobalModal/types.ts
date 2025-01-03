@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 export interface ModalConfig {
   title: string;
-  message: string;
+  message: string | ReactNode;
   buttons: ButtonConfig[];
 }
 
