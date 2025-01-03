@@ -8,6 +8,10 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
+        // Redux requires store data to be serializable
+        // However, Modal button configs contain onClick callbacks which are functions
+        // Here we configure Redux to ignore serialization checks for these callbacks
+        // @see https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
         ignoredPaths: ['modal.modalProps.buttons'],
         ignoredActionPaths: ['payload.buttons']
       },
