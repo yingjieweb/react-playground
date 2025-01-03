@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ModalC from "../modal-c";
+import { useModal } from "../../hooks/useModal";
+import styles from "./styles.module.scss";
 
 function PageB() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
+  const { showModal, hideModal } = useModal();
 
   const handleInputChange = () => {
     setIsModalVisible(true);
@@ -20,10 +23,27 @@ function PageB() {
   }, [isModalVisible, navigate]);
 
   return (
-    <div>
+    <div className={styles.pageB}>
       <h2>Page B</h2>
       <button onClick={() => handleInputChange()}>修改数据</button>
       {isModalVisible && <ModalC />}
+      <button
+        onClick={() =>
+          showModal({
+            title: "确认",
+            message: "确认内容",
+            buttons: [
+              {
+                type: "primary",
+                onClick: () => hideModal(),
+                text: "确认",
+              },
+            ],
+          })
+        }
+      >
+        显示确认框
+      </button>
     </div>
   );
 }
