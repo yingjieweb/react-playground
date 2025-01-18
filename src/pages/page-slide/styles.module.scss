@@ -9,6 +9,7 @@
   box-sizing: border-box;
   border: 1px solid #000;
   scroll-snap-align: start;
+  transition: opacity 0.5s ease-in-out;
   position: relative;
   z-index: 1;
 

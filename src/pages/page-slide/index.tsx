@@ -2,15 +2,24 @@ import { useState } from "react";
 import styles from "./styles.module.scss";
 import IntersectionObserver from "../../components/IntersectionObserver";
 
+let scrollingTimer: NodeJS.Timeout;
+
 function PageSlide() {
   const [showBackground, setShowBackground] = useState(false);
   const [bg1Size, setBg1Size] = useState(1);
   const [bg1Opacity, setBg1Opacity] = useState(0);
   const [bg2Opacity, setBg2Opacity] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    setIsScrolling(true);
+    clearTimeout(scrollingTimer);
+    scrollingTimer = setTimeout(() => {
+      setIsScrolling(false);
+    }, 200);
+
     const screenHeight = window.innerHeight;
-    const scrollTop = e.currentTarget.scrollTop;
+    const scrollTop = e.currentTarget?.scrollTop;
     const currentScreen = Math.floor(scrollTop / screenHeight);
 
     switch (currentScreen) {
@@ -46,11 +55,36 @@ function PageSlide() {
         className={styles.pageSlideGroup}
         onObserve={() => setShowBackground(true)}
       >
-        <div className={styles.pageSlideItem}>3.1</div>
-        <div className={styles.pageSlideItem}>3.2</div>
-        <div className={styles.pageSlideItem}>3.3</div>
-        <div className={styles.pageSlideItem}>3.4</div>
-        <div className={styles.pageSlideItem}>3.5</div>
+        <div
+          className={styles.pageSlideItem}
+          style={{ opacity: isScrolling ? 0 : 1 }}
+        >
+          3.1
+        </div>
+        <div
+          className={styles.pageSlideItem}
+          style={{ opacity: isScrolling ? 0 : 1 }}
+        >
+          3.2
+        </div>
+        <div
+          className={styles.pageSlideItem}
+          style={{ opacity: isScrolling ? 0 : 1 }}
+        >
+          3.3
+        </div>
+        <div
+          className={styles.pageSlideItem}
+          style={{ opacity: isScrolling ? 0 : 1 }}
+        >
+          3.4
+        </div>
+        <div
+          className={styles.pageSlideItem}
+          style={{ opacity: isScrolling ? 0 : 1 }}
+        >
+          3.5
+        </div>
         <div
           className={styles.pageSlideGroupBackground}
           style={{ display: showBackground ? "block" : "none" }}
