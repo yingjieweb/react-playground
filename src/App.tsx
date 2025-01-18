@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PageA from "./pages/page-a";
 import PageB from "./pages/page-b";
-import GlobalModal from './components/GlobalModal';
+import PageSlide from "./pages/page-slide";
+import GlobalModal from "./components/GlobalModal";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PageA />} />
           <Route path="/page-b" element={<PageB />} />
+          <Route path="/page-slide" element={<PageSlide />} />
         </Routes>
       </BrowserRouter>
       <GlobalModal />

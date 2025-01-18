@@ -1,0 +1,63 @@
+.pageSlide {
+  height: 100vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+}
+
+.pageSlideItem {
+  height: 100vh;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  scroll-snap-align: start;
+  position: relative;
+  z-index: 1;
+}
+
+.pageSlideGroup {
+  position: relative;
+}
+
+.pageSlideGroupBackground {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  background-color: orange;
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.background1 {
+  width: 100%;
+  height: 100%;
+  background-image: url(https://imagecdn.ymm56.com/ymmfile/static/resource/c279d99f-963d-4adf-9803-66a9959cd7fd.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.background2 {
+  width: 100%;
+  height: 100%;
+  background-image: url(https://imagecdn.ymm56.com/ymmfile/static/resource/06957455-4950-45c5-bc0f-1fd0e63afac1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
