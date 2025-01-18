@@ -6,9 +6,11 @@ let scrollingTimer: NodeJS.Timeout;
 
 function PageSlide() {
   const [showBackground, setShowBackground] = useState(false);
-  const [bg1Size, setBg1Size] = useState(1);
-  const [bg1Opacity, setBg1Opacity] = useState(0);
-  const [bg2Opacity, setBg2Opacity] = useState(0);
+  const [backgroundState, setBackgroundState] = useState({
+    bg1Size: 1,
+    bg1Opacity: 0,
+    bg2Opacity: 0,
+  });
   const [isScrolling, setIsScrolling] = useState(false);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -18,31 +20,30 @@ function PageSlide() {
       setIsScrolling(false);
     }, 200);
 
-    const screenHeight = window.innerHeight;
     const scrollTop = e.currentTarget?.scrollTop;
+    updateBackgroundState(scrollTop);
+  };
+  const updateBackgroundState = (scrollTop: number) => {
+    const screenHeight = window.innerHeight;
     const currentScreen = Math.floor(scrollTop / screenHeight);
-
-    switch (currentScreen) {
-      case 2:
-        setBg1Opacity(1);
-        setBg2Opacity(0);
-        setBg1Size((scrollTop - screenHeight * 1) / screenHeight);
-        break;
-      case 3:
-        setBg1Opacity(1);
-        setBg2Opacity(0);
-        setBg1Size((scrollTop - screenHeight * 1) / screenHeight);
-        break;
-      case 4:
-      case 5:
-      case 6:
-        setBg1Opacity(0);
-        setBg2Opacity(1);
-        break;
-      default:
-        setBg1Opacity(0);
-        setBg2Opacity(0);
-        break;
+    if (currentScreen === 2 || currentScreen === 3) {
+      setBackgroundState({
+        bg1Size: (scrollTop - screenHeight) / screenHeight,
+        bg1Opacity: 1,
+        bg2Opacity: 0,
+      });
+    } else if (currentScreen >= 4 && currentScreen <= 6) {
+      setBackgroundState({
+        ...backgroundState,
+        bg1Opacity: 0,
+        bg2Opacity: 1,
+      });
+    } else {
+      setBackgroundState({
+        ...backgroundState,
+        bg1Opacity: 0,
+        bg2Opacity: 0,
+      });
     }
   };
 
@@ -92,11 +93,16 @@ function PageSlide() {
           <div
             className={styles.background1}
             style={{
-              opacity: bg1Opacity,
-              backgroundSize: `${bg1Size * 100}% ${bg1Size * 100}%`,
+              opacity: backgroundState.bg1Opacity,
+              backgroundSize: `${backgroundState.bg1Size * 100}% ${
+                backgroundState.bg1Size * 100
+              }%`,
             }}
           />
-          <div className={styles.background2} style={{ opacity: bg2Opacity }} />
+          <div
+            className={styles.background2}
+            style={{ opacity: backgroundState.bg2Opacity }}
+          />
         </div>
       </IntersectionObserver>
 
