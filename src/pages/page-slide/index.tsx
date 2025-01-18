@@ -1,41 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./styles.module.scss";
+import IntersectionObserver from "../../components/IntersectionObserver";
 
 function PageSlide() {
   const [showBackground, setShowBackground] = useState(false);
-  const groupRef = useRef<HTMLDivElement>(null);
   const [bg1Size, setBg1Size] = useState(1);
   const [bg1Opacity, setBg1Opacity] = useState(0);
   const [bg2Opacity, setBg2Opacity] = useState(0);
 
-  useEffect(() => {
-    if (groupRef.current) {
-      observer.observe(groupRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        setShowBackground(entry.isIntersecting);
-      });
-    },
-    {
-      // 设置根元素为视窗
-      root: null,
-      // 设置根元素的边距，可以提前或延迟触发
-      rootMargin: "0px",
-      // 设置交叉比例阈值
-      threshold: 0.1,
-    }
-  );
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const screenHeight = window.innerHeight;
     const scrollTop = e.currentTarget.scrollTop;
     const currentScreen = Math.floor(scrollTop / screenHeight);
-
-    console.log("===========", currentScreen);
 
     switch (currentScreen) {
       case 2:
@@ -66,7 +42,10 @@ function PageSlide() {
       <div className={styles.pageSlideItem}>1</div>
       <div className={styles.pageSlideItem}>2</div>
 
-      <div className={styles.pageSlideGroup} ref={groupRef}>
+      <IntersectionObserver
+        className={styles.pageSlideGroup}
+        onObserve={() => setShowBackground(true)}
+      >
         <div className={styles.pageSlideItem}>3.1</div>
         <div className={styles.pageSlideItem}>3.2</div>
         <div className={styles.pageSlideItem}>3.3</div>
@@ -85,7 +64,7 @@ function PageSlide() {
           />
           <div className={styles.background2} style={{ opacity: bg2Opacity }} />
         </div>
-      </div>
+      </IntersectionObserver>
 
       <div className={styles.pageSlideItem}>4</div>
       <div className={styles.pageSlideItem}>5</div>
