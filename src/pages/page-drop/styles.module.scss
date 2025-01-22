@@ -1,0 +1,38 @@
+.pageDrop {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .headerNav {
+    border: 1px solid #000;
+    width: 100%;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .dropContainer {
+    border: 1px solid green;
+    height: 42px;
+    overflow: hidden;
+    position: relative;
+    .dropTrigger {
+      padding: 10px;
+    }
+    .dropContent {
+      width: 200px;
+      position: absolute;
+      .dropItem {
+        border: 1px solid #000;
+      }
+      .dropItem:hover {
+        background: red;
+      }
+    }
+  }
+  .dropContainer:hover {
+    overflow: visible;
+  }
+}
